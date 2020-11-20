@@ -54,7 +54,7 @@ cdef class PySimulationEngine:
                               Vector2D(vel[0], vel[1]), radius, prefSpeed,
                               maxAccel, goalRadius, neighborDist, k, ksi, m, t0)
 
-    def setAgentPrefVelocity(self, tuple vel):
+    def setAgentPrefVelocity(self, int id, tuple vel):
         self.thisptr.getAgent(id).setPreferredVelocity(Vector2D(vel[0], vel[1]))
 
     def getAgentPosition(self, int id):
