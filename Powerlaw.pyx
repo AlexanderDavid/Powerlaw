@@ -1,4 +1,6 @@
 from libcpp cimport bool
+from libcpp.pair cimport pair as cpair
+
 
 cdef extern from "util/Vector2D.h" namespace "TTC":
     cdef cppclass Vector2D:
@@ -6,6 +8,8 @@ cdef extern from "util/Vector2D.h" namespace "TTC":
         float getY()
         Vector2D()
         Vector2D(float x, float y)
+
+ctypedef cpair[Vector2D, Vector2D] LineSegment;
 
 cdef extern from "Agent.cpp":
     pass
@@ -34,6 +38,7 @@ cdef extern from "SimulationEngine.h" namespace "TTC":
         void addAgent(Vector2D position, Vector2D goal, Vector2D velocity,
                 float radius, float prefspeed, float maxacc, float goalradius,
                 float neighbordist, float k, float ksi, float m, float t0)
+        void addObstacle(LineSegment line)
 
 
 cdef class PySimulationEngine:
@@ -53,6 +58,14 @@ cdef class PySimulationEngine:
         self.thisptr.addAgent(Vector2D(pos[0], pos[1]), Vector2D(goal[0], goal[1]),
                               Vector2D(vel[0], vel[1]), radius, prefSpeed,
                               maxAccel, goalRadius, neighborDist, k, ksi, m, t0)
+
+    def addObstacle(self, tuple pos1, tuple pos2):
+        self.thisptr.addObstacle(
+            LineSegment(
+                Vector2D(pos1[0], pos1[1]),
+                Vector2D(pos2[0], pos2[1])
+            )
+        )
 
     def setAgentPrefVelocity(self, int id, tuple vel):
         self.thisptr.getAgent(id).setPreferredVelocity(Vector2D(vel[0], vel[1]))
