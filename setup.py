@@ -5,7 +5,7 @@ from glob import glob
 extensions = [
     Extension(
         "Powerlaw",
-        ["AnticipatoryModel.pyx", "src/LineObstacle.cpp", "src/lq2D.cpp",],
+        ["Powerlaw.pyx", "src/LineObstacle.cpp", "src/lq2D.cpp",],
         include_dirs=["src"],
         language="c++",
     )
