@@ -1,0 +1,75 @@
+* PowerLaw
+
+This is a python wrapper for the C++ implementation of the [PowerLaw][http://motion.cs.umn.edu/PowerLaw/] from the paper [Universal Power Law Governing Pedestrian Interactions](http://motion.cs.umn.edu/PowerLaw/KSG-PowerLaw.pdf). It wraps the most basic functionality of the simulation.
+
+** Installing
+1. Clone the repository as a submodule into your project (~git submodule add git@github.com:AlexanderDavid/Powerlaw.git~)
+2. Navigate to the Powerlaw directory (~cd Powerlaw~)
+3. Execute the ~setup.py~ file to install the library (~python setup.py install~)
+4. The powerlaw library is then installed under the alias ~Powerlaw~
+
+** Example Code
+*** Instantiate a Simulation Engine
+The model revolves around a central engine (~PySimulationEngine~) that all agents and obstacles are a member of. The parameters of this engine are the x, and y size of the environment, the timestep, and the max number of frames
+#+BEGIN_SRC python :session :results none
+from Powerlaw import PySimulationEngine
+
+engine = PySimulationEngine(50, 50, 0.005, 5000)
+#+END_SRC
+*** Add Agants to the model
+Agents can be added to the model by explicitly specifying all information about the agent and parameters to be used in the underlying powerlaw equations. A more complex agent configuration is shown in ~Example.py~
+
+#+BEGIN_SRC python :session :results none
+position = (0, 2.5)
+goal = (10, 2.5)
+velocity = (0, 0)
+radius = 0.5
+prefSpeed = 1.4
+maxAcc = 20
+goalRadius = 0.5
+neighborDist = 10
+k = 1.5
+ksi = 0.54
+m = 2
+t0 = 3
+
+engine.addAgent(position, goal, velocity, radius, prefSpeed, maxAcc,
+                goalRadius, neighborDist, k, ksi, m, t0)
+#+END_SRC
+*** Add obstacles to the model
+The simulation also supports static obstacles defined by a line segment of two points. A more complex shape can be defined through stringing these line segments together.
+#+BEGIN_SRC python :session :results none
+engine.addObstacle((0, 5), (5, 5))
+#+END_SRC
+*** Start the simulation
+The simulation will continue execution so long as the simulation has not exceeded maximum frames and there are still agents who have not reached their goals. The ~updateVisualisation~ function prints information about the current status to ~stdout~. For brevity only the first 10 simulation updates are included.
+
+#+BEGIN_SRC python :session :results output
+while not engine.endSimulation():
+    engine.updateVisualisation()
+    engine.updateSimulation()
+#+END_SRC
+
+#+RESULTS:
+#+begin_example
+Time: 0
+0: (0,2.5)
+Time: 0.005
+0: (6.48148e-05,2.5)
+Time: 0.01
+0: (0.000193844,2.5)
+Time: 0.015
+0: (0.000386494,2.5)
+Time: 0.02
+0: (0.000642175,2.5)
+Time: 0.025
+0: (0.000960303,2.5)
+Time: 0.03
+0: (0.0013403,2.5)
+Time: 0.035
+0: (0.00178159,2.5)
+Time: 0.04
+0: (0.00228362,2.5)
+Time: 0.045
+0: (0.0028458,2.5)
+#+end_example
