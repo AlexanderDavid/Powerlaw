@@ -1,6 +1,6 @@
 * PowerLaw
 
-This is a python wrapper for the C++ implementation of the [PowerLaw][http://motion.cs.umn.edu/PowerLaw/] from the paper [Universal Power Law Governing Pedestrian Interactions][http://motion.cs.umn.edu/PowerLaw/KSG-PowerLaw.pdf]. It wraps the most basic functionality of the simulation.
+This is a python wrapper for the C++ implementation of the [[http://motion.cs.umn.edu/PowerLaw/][PowerLaw]] from the paper [[http://motion.cs.umn.edu/PowerLaw/KSG-PowerLaw.pdf][Universal Power Law Governing Pedestrian Interactions]]. It wraps the most basic functionality of the simulation.
 
 ** Installing
 1. Clone the repository as a submodule into your project (~git submodule add git@github.com:AlexanderDavid/Powerlaw.git~)
