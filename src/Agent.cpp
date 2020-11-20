@@ -57,7 +57,7 @@ void Agent::init(Vector2D position, Vector2D goal, Vector2D vel, float radius,
   AgentInitialParameters aip = {position,  goal,   vel,        radius,
                                 prefspeed, maxacc, goalradius, neighbordist,
                                 k,         ksi,    m,          t0};
-  init(aip);
+  this->init(aip);
 }
 
 void Agent::doStep() {
