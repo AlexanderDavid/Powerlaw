@@ -52,7 +52,6 @@ while not engine.endSimulation():
     engine.updateSimulation()
 #+END_SRC
 
-#+RESULTS:
 #+begin_example
 Time: 0
 0: (0,2.5)
