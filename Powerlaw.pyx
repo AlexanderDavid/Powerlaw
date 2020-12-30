@@ -43,12 +43,14 @@ cdef extern from "SimulationEngine.h" namespace "TTC":
 
 cdef class PySimulationEngine:
     cdef SimulationEngine* thisptr
+    cdef int agent_num
 
     def __cinit__(self, float xRange, float yRange, float dt, float maxSteps):
         self.thisptr = new SimulationEngine()
         self.thisptr.init(xRange, yRange)
         self.thisptr.setTimeStep(dt)
         self.thisptr.setMaxSteps(maxSteps)
+        self.agent_num = -1
 
     def addAgent(self, tuple pos, tuple goal, tuple vel,
                  float radius, float prefSpeed,
@@ -58,6 +60,8 @@ cdef class PySimulationEngine:
         self.thisptr.addAgent(Vector2D(pos[0], pos[1]), Vector2D(goal[0], goal[1]),
                               Vector2D(vel[0], vel[1]), radius, prefSpeed,
                               maxAccel, goalRadius, neighborDist, k, ksi, m, t0)
+        self.agent_num += 1
+        return self.agent_num
 
     def addObstacle(self, tuple pos1, tuple pos2):
         self.thisptr.addObstacle(

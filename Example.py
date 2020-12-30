@@ -20,27 +20,36 @@ prefspeed = 1.4
 positions = [(10, 10), (10, 5), (1, 7.5)]
 goals = [(1, 10), (1, 5), (10, 7.5)]
 
+# Store all the agent numbers
+agent_nums = []
+
 # Add all agents to the simulation
 for position, goal in zip(positions, goals):
-    engine.addAgent(
-        position,
-        goal,
-        (0, 0),
-        radius,
-        prefspeed,
-        maxacc,
-        goalradius,
-        neighbordist,
-        k,
-        ksi,
-        m,
-        t0,
-    )
+    agent_nums.append(
+            engine.addAgent(
+                position,
+                goal,
+                (0, 0),
+                radius,
+                prefspeed,
+                maxacc,
+                goalradius,
+                neighbordist,
+                k,
+                ksi,
+                m,
+                t0))
 
 # Add an Obstacle through the middle
 engine.addObstacle((0, 5), (5, 5))
+
 
 # Loop the simulation
 while not engine.endSimulation():
     engine.updateVisualisation()
     engine.updateSimulation()
+
+print("Final Positions")
+# Report the location of all agents
+for agent_num in agent_nums:
+    print(f"{agent_num}: {engine.getAgentPosition(agent_num)}")
