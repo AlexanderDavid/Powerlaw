@@ -52,6 +52,9 @@ cdef class PySimulationEngine:
         self.thisptr.setMaxSteps(maxSteps)
         self.agent_num = -1
 
+    def __dealloc__(self):
+        del self.thisptr
+
     def addAgent(self, tuple pos, tuple goal, tuple vel,
                  float radius, float prefSpeed,
                  float maxAccel, float goalRadius,
