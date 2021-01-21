@@ -21,6 +21,7 @@ cdef extern from "Agent.h" namespace "TTC":
         Vector2D velocity()
         void setPreferredVelocity(const Vector2D vPref)
         float radius()
+        bool enabled()
 
 cdef extern from "SimulationEngine.cpp":
     pass
@@ -76,6 +77,9 @@ cdef class PySimulationEngine:
 
     def setAgentPrefVelocity(self, int id, tuple vel):
         self.thisptr.getAgent(id).setPreferredVelocity(Vector2D(vel[0], vel[1]))
+
+    def isAgentEnabled(self, int id):
+        return self.thisptr.getAgent(id).enabled()
 
     def getAgentPosition(self, int id):
         cdef Vector2D position = self.thisptr.getAgent(id).position()
