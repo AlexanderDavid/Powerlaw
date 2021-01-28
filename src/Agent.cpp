@@ -61,7 +61,7 @@ void Agent::init(Vector2D position, Vector2D goal, Vector2D vel, float radius,
 }
 
 void Agent::doStep() {
-  _vPref = _goal - _position;
+  /* _vPref = _goal - _position; */
   float distSqToGoal = _vPref.lengthSqr();
 
   if (distSqToGoal < _goalRadiusSq) {
