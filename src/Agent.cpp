@@ -62,19 +62,22 @@ void Agent::init(Vector2D position, Vector2D goal, Vector2D vel, float radius,
 
 void Agent::doStep() {
   // Ensure agent isn't at goal
-  float distSqToGoal = _vPref.lengthSqr();
+  float distSqToGoal = (this->_position - this->_goal).lengthSqr();
+
   if (distSqToGoal < _goalRadiusSq) {
     destroy();
     _enabled = false;
     return;
   }
 
+  // Clamp vPref
+  clamp(_vPref, _prefSpeed);
+
   // compute the new velocity of the agent
   computeForces();
 }
 
 void Agent::computeForces() {
-
   // driving force
   _F = (_vPref - _velocity) / _ksi;
 
