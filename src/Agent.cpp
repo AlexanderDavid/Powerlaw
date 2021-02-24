@@ -62,24 +62,24 @@ void Agent::init(Vector2D position, Vector2D goal, Vector2D vel, float radius,
 
 void Agent::doStep() {
   // Ensure agent isn't at goal
-  float distSqToGoal = _vPref.lengthSqr();
+  float distSqToGoal = (this->_position - this->_goal).lengthSqr();
+
   if (distSqToGoal < _goalRadiusSq) {
     destroy();
     _enabled = false;
     return;
   }
 
+  // Clamp vPref
+  clamp(_vPref, _prefSpeed);
+
   // compute the new velocity of the agent
   computeForces();
 }
 
 void Agent::computeForces() {
-
-  // Calculate the goal force
-  Vector2D F_g = (_vPref - _velocity) / _ksi;
-
-  // Instantiate forces for agents and obstacles
-  Vector2D F_a, F_o;
+  // driving force
+  _F = (_vPref - _velocity) / _ksi;
 
   // Compute new neighbors of agent;
   _proximityNeighbors.clear();
@@ -107,7 +107,7 @@ void Agent::computeForces() {
         discr = sqrtf(discr);
         const float t = (b - discr) / a;
         if (t > 0) {
-          F_a += -_k * exp(-t / _t0) * (v - (b * v - a * w) / discr) /
+          _F += -_k * exp(-t / _t0) * (v - (b * v - a * w) / discr) /
                 (a * powf(t, _m)) * (_m / t + 1 / _t0);
         }
       }
@@ -215,20 +215,14 @@ void Agent::computeForces() {
     }
 
     if (discCollision) {
-      F_o += -_k * exp(-t_min / _t0) *
+      _F += -_k * exp(-t_min / _t0) *
             (_velocity - (b * _velocity - a * w) / discr) /
             (a * powf(t_min, _m)) * (_m / t_min + 1 / _t0);
     } else if (segmentCollision) {
-      F_o += _k * exp(-t_min / _t0) / (powf(t_min, _m) * det(_velocity, o)) *
+      _F += _k * exp(-t_min / _t0) / (powf(t_min, _m) * det(_velocity, o)) *
             (_m / t_min + 1 / _t0) * Vector2D(-o.y, o.x);
     }
   }
-
-  // Clamp the forces and add them to the max forces
-  clamp(F_a, _maxAccel);
-  clamp(F_o, _maxAccel);
-  clamp(F_g, _maxAccel);
-  _F = F_a + F_o + F_g;
 }
 
 void Agent::update() {

@@ -57,7 +57,7 @@ while not engine.endSimulation():
             goal_vec = (goal_vec / np.linalg.norm(goal_vec)) * prefspeed
 
         # Set the agents goal velocity
-        engine.setAgentPrefVelocity(agent_nums[-1], tuple(goal_vec))
+        engine.setAgentPrefVelocity(agent, tuple(goal_vec))
 
     engine.updateVisualisation()
     engine.updateSimulation()
