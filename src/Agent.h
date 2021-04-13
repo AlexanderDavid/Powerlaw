@@ -67,6 +67,9 @@ public:
   void setPreferredVelocity(const Vector2D &vPref) { _vPref = vPref; }
   //@}
 
+  void setVelocity(const Vector2D &velocity) { _velocity = velocity; }
+  void setPosition(const Vector2D &position) { _position = position; }
+
 protected:
   /// Computes the neighbors which will be considered for computing the
   /// anticipatory forces
