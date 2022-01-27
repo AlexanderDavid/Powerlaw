@@ -19,6 +19,7 @@ cdef extern from "Agent.h" namespace "TTC":
         init(Vector2D position, Vector2D goal, Vector2D vel, float radius, float prefspeed, float maxacc, float goalradius, float neighbordist, float k, float ksi, float m, float t0)
         Vector2D position()
         Vector2D velocity()
+        Vector2D vPref()
         void setPreferredVelocity(const Vector2D vPref)
         void setVelocity(const Vector2D velocity)
         void setPosition(const Vector2D position)
@@ -95,6 +96,10 @@ cdef class PySimulationEngine:
 
     def getAgentVelocity(self, int id):
         cdef Vector2D velocity = self.thisptr.getAgent(id).velocity()
+        return velocity.getX(), velocity.getY()
+
+    def getAgentPrefVelocity(self, int id):
+        cdef Vector2D velocity = self.thisptr.getAgent(id).vPref()
         return velocity.getX(), velocity.getY()
 
     def getAgentRadius(self, int id):
