@@ -41,7 +41,8 @@ cdef extern from "SimulationEngine.h" namespace "TTC":
         Agent* getAgent(int id)
         void addAgent(Vector2D position, Vector2D goal, Vector2D velocity,
                 float radius, float prefspeed, float maxacc, float goalradius,
-                float neighbordist, float k, float ksi, float m, float t0)
+                float neighbordist, float k, float ksi, float m, float t0,
+                float veluncertainty)
         void addObstacle(LineSegment line)
 
 
@@ -63,10 +64,10 @@ cdef class PySimulationEngine:
                  float radius, float prefSpeed,
                  float maxAccel, float goalRadius,
                  float neighborDist, float k, float ksi,
-                 float m, float t0):
+                 float m, float t0, float veluncertainty = 0):
         self.thisptr.addAgent(Vector2D(pos[0], pos[1]), Vector2D(goal[0], goal[1]),
                               Vector2D(vel[0], vel[1]), radius, prefSpeed,
-                              maxAccel, goalRadius, neighborDist, k, ksi, m, t0)
+                              maxAccel, goalRadius, neighborDist, k, ksi, m, t0, veluncertainty)
         self.agent_num += 1
         return self.agent_num
 

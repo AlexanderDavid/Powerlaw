@@ -115,7 +115,7 @@ public:
   void addAgent(AgentInitialParameters &parameters);
   void addAgent(Vector2D position, Vector2D goal, Vector2D velocity,
                 float radius, float prefspeed, float maxacc, float goalradius,
-                float neighbordist, float k, float ksi, float m, float t0);
+                float neighbordist, float k, float ksi, float m, float t0, float veluncertainty=0);
 
   /*!
    *  @brief Add  a new line obstacle to the simulation

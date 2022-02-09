@@ -53,11 +53,13 @@ void Agent::init(const AgentInitialParameters &initialConditions) {
 
 void Agent::init(Vector2D position, Vector2D goal, Vector2D vel, float radius,
                  float prefspeed, float maxacc, float goalradius,
-                 float neighbordist, float k, float ksi, float m, float t0) {
+                 float neighbordist, float k, float ksi, float m, float t0,
+                 float veluncertainty) {
   AgentInitialParameters aip = {position,  goal,   vel,        radius,
                                 prefspeed, maxacc, goalradius, neighbordist,
                                 k,         ksi,    m,          t0};
   this->init(aip);
+  _velUncertainty = veluncertainty;
 }
 
 void Agent::doStep() {
@@ -99,8 +101,8 @@ void Agent::computeForces() {
 
       const Vector2D w = other->position() - _position;
       const Vector2D v = _velocity - other->velocity();
-      const float a = v * v;
-      const float b = w * v;
+      const float a = v * v - _velUncertainty * _velUncertainty;
+      const float b = w * v + _velUncertainty * other->radius() + _radius;
       const float c = w * w - radiusSq;
       float discr = b * b - a * c;
       if (discr > .0f && (a < -_EPSILON || a > _EPSILON)) {

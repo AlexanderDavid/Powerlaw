@@ -34,7 +34,7 @@ public:
   void init(const AgentInitialParameters &initialConditions);
   void init(Vector2D position, Vector2D goal, Vector2D vel, float radius,
             float prefspeed, float maxacc, float goalradius, float neighbordist,
-            float k, float ksi, float m, float t0);
+            float k, float ksi, float m, float t0, float veluncertainty = 0);
   void update();
   void doStep();
 
@@ -141,5 +141,7 @@ protected:
   float _m;
   /// Relaxation time for the driving force
   float _ksi;
+  /// Uncertainty in velocity
+  float _velUncertainty;
 };
 } // namespace TTC

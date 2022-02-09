@@ -112,12 +112,12 @@ void SimulationEngine::addAgent(Vector2D position, Vector2D goal,
                                 Vector2D velocity, float radius,
                                 float prefspeed, float maxacc, float goalradius,
                                 float neighbordist, float k, float ksi, float m,
-                                float t0) {
+                                float t0, float veluncertainty) {
 
   Agent *newAgent = new Agent();
   if (newAgent != NULL) {
     newAgent->init(position, goal, velocity, radius, prefspeed, maxacc,
-                   goalradius, neighbordist, k, ksi, m, t0);
+                   goalradius, neighbordist, k, ksi, m, t0, veluncertainty);
     _agents.push_back(newAgent);
   }
 }
