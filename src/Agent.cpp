@@ -101,8 +101,8 @@ void Agent::computeForces() {
 
       const Vector2D w = other->position() - _position;
       const Vector2D v = _velocity - other->velocity();
-      const float a = v * v - _velUncertainty * _velUncertainty;
-      const float b = w * v + _velUncertainty * other->radius() + _radius;
+      const float a = v * v - other->_velUncertainty * other->_velUncertainty;
+      const float b = w * v + other->_velUncertainty * other->radius() + _radius;
       const float c = w * w - radiusSq;
       float discr = b * b - a * c;
       if (discr > .0f && (a < -_EPSILON || a > _EPSILON)) {
