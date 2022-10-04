@@ -11,6 +11,7 @@
 
 #include "Agent.h"
 #include "SimulationEngine.h"
+#include "util/Vector2D.h"
 
 namespace TTC {
 
@@ -43,6 +44,8 @@ void Agent::init(const AgentInitialParameters &initialConditions) {
   _m = initialConditions.m;
   _t0 = initialConditions.t0;
   _goalRadiusSq = initialConditions.goalRadius * initialConditions.goalRadius;
+
+  _vPref = normalize(_goal - _position) * _prefSpeed;
 
   _enabled = true;
   // add to the database
