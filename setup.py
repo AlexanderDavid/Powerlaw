@@ -14,10 +14,15 @@ extensions = [
     )
 ]
 
+with open("README.md", "r") as fh:
+    long_description = fh.read()
+
 setup(
     name="powerlaw",
     version="1.0.0",
     description="Python wrapper for the Powerlaw Collision Avoidance model",
+    long_description=long_description,
+    long_description_content_type="text/markdown",
     author="Alex Day",
     author_email="alex@alexday.me",
     url="https://github.com/AlexanderDavid/Powerlaw",
