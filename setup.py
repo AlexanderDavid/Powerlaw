@@ -1,13 +1,25 @@
 from setuptools import Extension, setup
 from Cython.Build import cythonize
-from glob import glob
 
 extensions = [
     Extension(
-        "Powerlaw",
-        ["Powerlaw.pyx", "src/LineObstacle.cpp", "src/lq2D.cpp",],
-        include_dirs=["src"],
+        "powerlaw",
+        [
+            "powerlaw/powerlaw.pyx",
+            "powerlaw/src/LineObstacle.cpp",
+            "powerlaw/src/lq2D.cpp"
+        ],
+        include_dirs=["powerlaw/src"],
         language="c++",
     )
 ]
-setup(name="Python Powerlaw", ext_modules=cythonize(extensions))
+
+setup(
+    name="powerlaw",
+    version="1.0.0",
+    description="Python wrapper for the Powerlaw Collision Avoidance model",
+    author="Alex Day",
+    author_email="alex@alexday.me",
+    url="https://github.com/AlexanderDavid/Powerlaw",
+    ext_modules=cythonize(extensions)
+)

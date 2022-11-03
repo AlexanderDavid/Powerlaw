@@ -1,3 +1,5 @@
 *.so
-Powerlaw.cpp
-src/Example
+src/powerlaw.cpp
+powerlaw.egg-info
+build
+dist
